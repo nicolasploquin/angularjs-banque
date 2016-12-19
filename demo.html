@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="MaBanque" ng-strict-di >
+<head>
+    <meta charset="UTF-8">
+    <title>Formation AngularJS - ENI Service</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="lib/angular.min.js" defer ></script>
+    <script src="js/data.js" defer ></script>
+    <script src="js/app.js" defer ></script>
+    <script src="js/controllers.js" defer ></script>
+    <script src="js/services.js" defer ></script>
+</head>
+<body class="container" ng-controller="demoCtrl">
+
+    <h1>{{titre}}</h1>
+
+    <p>{{"AngularJS OK !"}}</p>
+
+    <p >valeur initiale : {{::message()}}</p>
+    <input type="text" ng-model="message" ng-model-options="{getterSetter: true}"/>
+    <p >{{message()}}</p>
+
+    <div>
+        <label>Rechercher <input type="search" ng-model="filtreNomPrenom" /></label>
+    </div>
+    <div class="list-group">
+        <a href="#"
+           class="list-group-item"
+           ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:10">
+            {{client.prenom}} {{client.nom | uppercase}}
+            <span class="badge">{{client.comptes.length || 0}}</span>
+        </a>
+    </div>
+
+    <div id="splash">Chargement en cours...</div>
+
+</body>
+</html>

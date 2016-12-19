@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="banque" ng-strict-di >
+<head>
+    <meta charset="UTF-8">
+    <title>Formation AngularJS - ENI Service</title>
+    <link rel="stylesheet" href="lib/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="lib/angular.min.js" defer ></script>
+    <script src="lib/angular-route.min.js" defer ></script>
+    <script src="lib/angular-locale_fr-fr.js" defer ></script>
+    <script src="js/data.js" defer ></script>
+    <script src="js/app.js" defer ></script>
+    <script src="js/views.js" defer ></script>
+    <script src="js/controllers-q.js" defer ></script>
+    <script src="js/services.js" defer ></script>
+    <script src="directives/eni-range/eni-range.js" defer ></script>
+    <script src="i18n/banque-resources_fr-fr.js" defer ></script>
+</head>
+<body class="container" ng-controller="demoCtrl">
+
+    <h1>{{"app_titre" | i18n}}</h1>
+
+    <main ng-view></main>
+
+
+    <div id="splash">{{"app_splash" | i18n}}</div>
+
+</body>
+</html>
