@@ -86,14 +86,14 @@
                 $http({
                     url:API_URL+"/clients",
                     method:"get"
-                }).success(function(data){
-                    _data.clients = data;
+                }).then(function(res){
+                    _data.clients = res.data;
 //                    console.dir(data);
                     console.log("réponse serveur")
 
-                    attente.resolve(data);
+                    attente.resolve(res.data);
 
-                }).error(function(){
+                },function(){
                     console.warn("Erreur lors de la récupération des données sur le serveur.");
                 });
 
@@ -116,7 +116,7 @@
                     url:API_URL+"/clients/"+(angular.isDefined(client.id)?client.id:"0"),
                     method:(angular.isDefined(client.id)?"put":"post"),
                     params:angular.copy(client)
-                }).success(function(){
+                }).then(function(){
                     defer.resolve();
                 });
                 return defer.promise;
@@ -126,7 +126,7 @@
                 $http({
                     url:API_URL+"/clients/"+id,
                     method:"delete"
-                }).success(function(){
+                }).then(function(){
                     defer.resolve();
                 });
                 return defer.promise;

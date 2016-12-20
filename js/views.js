@@ -8,15 +8,15 @@ app.constant("views", {
             <label>Rechercher <input type="search" ng-model="filtreNomPrenom" /></label>
             <eni-range max="{{clients.length}}" valeurmax="limit"></eni-range>
         </div>
-        <div class="list-group">
-            <a href="#/clients/{{client.id}}"
-               class="list-group-item"
-               ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:limit">
+        <ul class="list-group">
+            <a ng-href="#!/clients/{{client.id}}"
+               ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:limit"
+               class="list-group-item" >
                {{client.prenom}} {{client.nom | uppercase}}
                <span class="badge">{{client.comptes.length || 0}}</span>
             </a>
-        </div>
-        <a ng-href="#/clients/add/" role="button" class="btn btn-primary" aria-label="Nouveau Client">
+        </ul>
+        <a ng-href="#!/clients/add" role="button" class="btn btn-primary" aria-label="Nouveau Client">
 		  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{"clients_btn_ajouter" | i18n}}
 		</a>
     `,
@@ -50,7 +50,7 @@ app.constant("views", {
 		    <button type="button" class="btn btn-default" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span></button>
 		</h2>
 		<div class="list-group">
-			<a ng-href="#/clients/{{client.id}}/{{compte.numero}}" class="list-group-item" 
+			<a ng-href="#!/clients/{{client.id}}/{{compte.numero}}" class="list-group-item" 
 				ng-repeat="compte in client.comptes | orderBy:'-numero'" >
 			  {{compte.numero}} {{compte.intitule}} <span class="badge">{{compte.operations.length}}</span>
 			</a>
@@ -61,7 +61,7 @@ app.constant("views", {
 		<p>{{client.prenom}} {{client.nom | uppercase}}</p>
 		<table class="table table-striped">
 			<thead>
-				<tr><th>Date</th><th>Libellé</th><th>Montant</th></tr>
+				<tr><th data-prop="date">Date</th><th>Libellé</th><th>Montant</th></tr>
 			</thead>
 			<tbody>
 				<tr ng-repeat="ope in compte.operations |orderBy:'montant'">
@@ -71,7 +71,7 @@ app.constant("views", {
 				</tr>
 			</tbody>
 		</table>
-		<a ng-href="#/clients/{{client.id}}/{{compte.numero}}/add" role="button" class="btn btn-primary" aria-label="Ajouter une Opération">
+		<a ng-href="#!/clients/{{client.id}}/{{compte.numero}}/add" role="button" class="btn btn-primary" aria-label="Ajouter une Opération">
 		  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Ajouter une Opération
 		</a>
     `

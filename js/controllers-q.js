@@ -7,7 +7,6 @@
 
     var app = angular.module("banque");
 
-
     app.controller("demoCtrl", ["$scope",demoCtrl]);
     function demoCtrl($scope) {
         $scope.titre = "Ma Banque en ligne avec AngularJS !"
@@ -57,12 +56,7 @@
         $scope.edit = function(){
             $location.path("/clients/add/"+$routeParams.id);
         };
-        $scope.remove = function(){ //TODO: $emit
-/*            dataService.removeClient($routeParams.id)
-                .then(dataService.clients)
-                .then(function(data){
-                    $scope.clients = data;
-                });*/
+        $scope.remove = function(){
             dataService.removeClient($routeParams.id)
                 .then(function(){
                     $location.path("/clients");

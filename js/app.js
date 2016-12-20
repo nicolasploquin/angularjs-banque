@@ -8,7 +8,8 @@
 
 
     var app = angular.module("banque",["ngRoute"]);
-    app.config(["$routeProvider","views",function($routeProvider, views){
+    app.config(["$routeProvider","views", function($routeProvider, views){
+
         console.log("Configuration des routes...");
         $routeProvider
             .when("/clients",{
