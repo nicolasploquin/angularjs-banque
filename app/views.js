@@ -6,7 +6,8 @@ app.constant("views", {
     "clients": `
         <div>
             <label>Rechercher <input type="search" ng-model="filtreNomPrenom" /></label>
-            <eni-range max="{{clients.length}}" valeurmax="limit"></eni-range>
+            <eni-range max="{{clients.length}}" valeurmax="limit" initial="4" test="testDirective()"></eni-range>
+            <input type="number" ng-model="limit" />
         </div>
         <ul class="list-group">
             <a ng-href="#!/clients/{{client.id}}"

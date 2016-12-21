@@ -29,6 +29,19 @@
                 || filtre.length == 0;
         };
 
+        $scope.testDirective = function(){
+            console.log("événement click provenant de la directive eni-range...");
+            $scope.clients.push({});
+        };
+
+        // var _limit = 0;
+        // $scope.limit = function(_value){
+        //     _limit = angular.isDefined(_value)?parseInt(_value):_limit;
+        //     return _limit;
+        // }
+
+
+
     }
 
     app.controller("clientEditCtrl", ["$scope","$routeParams","$location","dataHttpService", clientEditCtrl]);

@@ -7,7 +7,7 @@
 
 
 
-    var app = angular.module("banque",["ngRoute"]);
+    var app = angular.module("banque",["ngRoute","eniComposants"]);
     app.config(["$routeProvider","views", function($routeProvider, views){
 
         console.log("Configuration des routes...");
