@@ -41,11 +41,26 @@
         // }
 
 
+        $scope.$on("updateListeClients",function(event, _clients){
+            $scope.clients = _clients;
+
+        });
+
 
     }
 
-    app.controller("clientEditCtrl", ["$scope","$routeParams","$location","dataHttpService", clientEditCtrl]);
-    function clientEditCtrl($scope,$routeParams, $location, dataService) {
+    app.controller("clientEditCtrl", ["$scope","$rootScope","$routeParams","$location","dataHttpService", clientEditCtrl]);
+    function clientEditCtrl($scope,$rootScope,$routeParams, $location, dataService) {
+        // var _nom;
+        // $scope.client = {};
+        // $scope.client.nom = function(newValue) {
+        //     if(angular.isDefined(newValue)){
+        //         _nom = newValue.toUpperCase().substring(0,8);
+        //     }
+        //     return _nom;
+        // };
+
+
         if(angular.isDefined($routeParams.id)){
             $scope.client = dataService.client($routeParams.id);
         }
@@ -53,9 +68,10 @@
         $scope.enregistrer = function () {
             console.dir($scope.client);
             dataService.saveClient(angular.copy($scope.client))
-                .then(function(){
-                    $location.path("/clients");
+                .then(function(clients){
+                    $rootScope.$broadcast("updateListeClients",clients);
                 });
+            $location.path("/clients");
 
         };
 

@@ -35,6 +35,15 @@
 
     app.controller("clientEditCtrl", ["$scope","$routeParams","$location","dataLocalService", clientEditCtrl]);
     function clientEditCtrl($scope,$routeParams, $location, dataService) {
+        // var _nom;
+        // $scope.client.nom = function(newValue) {
+        //     if(angular.isDefined(newValue)){
+        //         _nom = newValue.toUpperCase().substring(0,8);
+        //     }
+        //     return _nom;
+        // };
+
+
         if(angular.isDefined($routeParams.id)){
             $scope.client = dataService.client($routeParams.id);
         }

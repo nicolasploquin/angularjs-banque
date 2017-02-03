@@ -16,15 +16,14 @@
                 <style>
                     .eni-range.eni-range-label { display: inline-block; width: 1.6em; line-height: 1.6em; border: 1px solid currentColor; text-align: center; }
                 </style>
-                <span>module</span>
-                <input type="range" ng-model="valeurmax" nng-model-options="{ getterSetter: true }" min="1" max="{{max}}" value="{{initial}}" />
+                <input type="range" ng-model="valeurmax" nng-model-options="{ getterSetter: true }" min="1" max="{{max}}" />{{initial}}
                 <!--input type="text" ng-model="valeurmax" maxlength="2" 
                         style="width:2em;text-align:center" /-->
                 <span class="eni-range eni-range-label" ng-click="test()">{{valeurmax}}</span>
             `,
             scope: {
-                valeurmax:"=",
                 initial:"@",
+                valeurmax:"=",
                 test:"&",
                 max:"@"
             },
@@ -54,4 +53,4 @@
 
 
 
-})()
+})();

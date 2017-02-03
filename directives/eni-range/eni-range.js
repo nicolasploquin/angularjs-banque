@@ -5,11 +5,6 @@ angular.module("banque")
     .directive("eniRange",function(){ // <eni-range />
         "use strict";
 
-        function tester (){
-
-        }
-
-
 
         return {
             restrict: "E",

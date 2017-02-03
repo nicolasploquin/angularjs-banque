@@ -33,11 +33,24 @@
             });
 
     }]);
-    app.run(function(){
+    app.run(["$http",function($http){
         console.log("Application OK !");
+
+
+        $http({
+            method: "GET",
+            url: "http://wildfly.westeurope.cloudapp.azure.com/clients"
+        }).then(function(reponse){
+            console.dir(reponse.data);
+        });
+
+
+
+
+
         setTimeout(function(){
             document.querySelector("#splash").remove();
         },1000);
-    });
+    }]);
 
 })();

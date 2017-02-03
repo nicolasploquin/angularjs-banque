@@ -4,8 +4,10 @@
 var app = angular.module("banque");
 app.constant("views", {
     "clients": `
+        <p>${3 + 2}</p>
         <div>
             <label>Rechercher <input type="search" ng-model="filtreNomPrenom" /></label>
+            <span>{{filtreNomPrenom}}</span>
             <eni-range max="{{clients.length}}" valeurmax="limit" initial="4" test="testDirective()"></eni-range>
             <input type="number" ng-model="limit" />
         </div>
@@ -13,8 +15,8 @@ app.constant("views", {
             <a ng-href="#!/clients/{{client.id}}"
                ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:limit"
                class="list-group-item" >
-               {{client.prenom}} {{client.nom | uppercase}}
-               <span class="badge">{{client.comptes.length || 0}}</span>
+               {{client.prenom | capitalize}} {{client.nom | uppercase}}
+               <span class="badge" ng-if="client.comptes != 0">{{client.comptes.length || 0}}</span>
             </a>
         </ul>
         <a ng-href="#!/clients/add" role="button" class="btn btn-primary" aria-label="Nouveau Client">
@@ -28,7 +30,7 @@ app.constant("views", {
 				ng-class="{'has-success': form.cliNom.$valid, 'has-error': form.cliNom.$dirty && form.cliNom.$invalid}" >
 				<label class="sr-only" for="cliNom" >Nom *</label>
 				<input type="text" class="form-control" placeholder="Nom *" 
-						id="cliNom" name="cliNom" ng-model="client.nom"
+						id="cliNom" name="cliNom" ng-model="client.nom" --ng-model-options="{getterSetter: true}"
 						required />
 				<span ng-show="form.cliNom.$valid" 
 				        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
@@ -41,12 +43,13 @@ app.constant("views", {
 					    id="cliPrenom" name="cliPrenom" ng-model="client.prenom" />
 			</div>
 			
-			<input type="submit" class="btn btn-primary" value="{{'clientEdit_btn_enregistrer' | i18n}}" ng-disabled="form.$invalid" />
+			<input type="submit" class="btn btn-primary" value="{{'clientEdit_btn_enregistrer' | i18n}}" 
+			       ng-disabled="form.$invalid" />
 
 		</form>
     `,
     "client":`
-		<h2>{{client.prenom}} {{client.nom}} 
+		<h2>{{client.prenom | capitalize}} {{client.nom  | uppercase}} 
 		    <a ng-href="/clients/add/{{client.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
 		    <button type="button" class="btn btn-default" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span></button>
 		</h2>

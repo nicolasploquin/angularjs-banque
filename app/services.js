@@ -20,12 +20,31 @@
             clients : function(){
                 return _data.clients;
             },
+            clientsQ : function(){
+                var attente = $q.defer();
+                attente.resolve(_data.clients);
+                return attente.promise;
+            },
             client : function(id){
-                for(var i in _data.clients){
-                    if(_data.clients[i].id == id) return _data.clients[i];
-                }
-                console.warn('Client inconnu : ' + id);
-                return {};
+                return _data.clients.find(cli => cli.id == id) || {}; // ES6
+
+
+                // for(let client of _data.clients){
+                //     if(client.id == id) return client;
+                // }
+                // for(var i in _data.clients){
+                //     if(_data.clients[i].id == id) return _data.clients[i];
+                // }
+
+                // return _data.clients.filter(cli => cli.id == id) || {}; // ES6
+                // return _data.clients.filter(function(cli){ return cli.id == id; }) || {}; // ES5
+                //
+                // for(var i in _data.clients){
+                //     if(_data.clients[i].id == id) return _data.clients[i];
+                // }
+                //
+                // console.warn('Client inconnu : ' + id);
+                // return {};
             },
             saveClient : function(client){
                 if(angular.isDefined(client.id)){
@@ -33,7 +52,7 @@
                 }else{
                     client.id = _data.clients_id++;
                 }
-                _data.clients.push(angular.copy(client)); // "copy" supprime les attributs angular de l'objet ($$...)
+                _data.clients.push(client); // "copy" supprime les attributs angular de l'objet ($$...)
                 save();
             },
             removeClient : function(id){
@@ -101,13 +120,10 @@
 
                 // retourne l'objet d'attente pour enregistrement des fonctions suivantes
                 return attente.promise;
+                // return _data.clients;
             },
             client : function(id){ //TODO: $http()
-                for(var i in _data.clients){
-                    if(_data.clients[i].id == id) return _data.clients[i];
-                }
-                console.warn('Client inconnu : ' + id);
-                return {};
+                return _data.clients.find(cli => cli.id == id) || {}; // ES6
             },
             saveClient : function(client){
                 var defer = $q.defer();
@@ -155,5 +171,10 @@
         };
 
     }]);
+
+
+
+
+
 
 })();
