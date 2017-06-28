@@ -1,0 +1,19 @@
+<form class="row" name="clientForm" ng-submit="enregistrer()" novalidate>
+    <div class="input-field col s12">
+        <input id="nom" name="nom" type="text" class="validate" required
+            ng-model="client.nom" ng-class="{invalid: clientForm.nom.$invalid && clientForm.nom.$dirty}"
+        >
+        <label for="nom" data-error="nom obligatoire" >Nom *</label>
+    </div>
+    <div class="input-field col s12">
+        <input id="prenom" name="prenom" type="text" class="validate"
+            ng-model="client.prenom" ng-class="{invalid: clientForm.prenom.$invalid && clientForm.nom.$dirty}"
+        >
+        <label for="prenom">Prénom</label>
+    </div>
+    <button type="submit" class="row waves-effect waves-light btn"
+        ng-disabled="clientForm.$invalid">
+        <i class="material-icons right">done</i>
+        Valider
+    </button>
+</form>

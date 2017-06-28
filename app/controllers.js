@@ -23,6 +23,7 @@
     app.controller("clientsCtrl", ["$scope","dataLocalService", clientsCtrl]);
     function clientsCtrl($scope, dataService) {
         $scope.clients = dataService.clients();
+        $scope.limit = $scope.clients.length;
 
         $scope.clientFiltre = function (client, index, array) {
             var filtre = ($scope.filtreNomPrenom || "").toLowerCase();
@@ -35,15 +36,13 @@
 
     app.controller("clientEditCtrl", ["$scope","$routeParams","$location","dataLocalService", clientEditCtrl]);
     function clientEditCtrl($scope,$routeParams, $location, dataService) {
-        // var _nom;
-        // $scope.client.nom = function(newValue) {
-        //     if(angular.isDefined(newValue)){
-        //         _nom = newValue.toUpperCase().substring(0,8);
-        //     }
-        //     return _nom;
-        // };
-
-
+        $scope.$watchCollection('client', function() {
+            Materialize.updateTextFields();
+        });
+        setTimeout(function() {
+            Materialize.updateTextFields();
+        },2000);
+        
         if(angular.isDefined($routeParams.id)){
             $scope.client = dataService.client($routeParams.id);
         }

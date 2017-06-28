@@ -8,7 +8,12 @@
     var app = angular.module("banque");
 
     app.filter("capitalize",function(){
+
         return function(prenom){
+            // var premiereLettre = prenom.charAt(0).toUpperCase();
+            // var reste = prenom.substring(1).toLowerCase();
+            // return premiereLettre + reste;
+
             return prenom
                         .toLowerCase()
                         .split("-")

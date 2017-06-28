@@ -31,19 +31,10 @@
 
         $scope.testDirective = function(){
             console.log("événement click provenant de la directive eni-range...");
-            $scope.clients.push({});
         };
-
-        // var _limit = 0;
-        // $scope.limit = function(_value){
-        //     _limit = angular.isDefined(_value)?parseInt(_value):_limit;
-        //     return _limit;
-        // }
-
 
         $scope.$on("updateListeClients",function(event, _clients){
             $scope.clients = _clients;
-
         });
 
 
@@ -51,15 +42,6 @@
 
     app.controller("clientEditCtrl", ["$scope","$rootScope","$routeParams","$location","dataHttpService", clientEditCtrl]);
     function clientEditCtrl($scope,$rootScope,$routeParams, $location, dataService) {
-        // var _nom;
-        // $scope.client = {};
-        // $scope.client.nom = function(newValue) {
-        //     if(angular.isDefined(newValue)){
-        //         _nom = newValue.toUpperCase().substring(0,8);
-        //     }
-        //     return _nom;
-        // };
-
 
         if(angular.isDefined($routeParams.id)){
             $scope.client = dataService.client($routeParams.id);
@@ -86,7 +68,8 @@
             $location.path("/clients/add/"+$routeParams.id);
         };
         $scope.remove = function(){
-            dataService.removeClient($routeParams.id)
+            dataService
+                .removeClient($routeParams.id)
                 .then(function(){
                     $location.path("/clients");
                 });

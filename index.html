@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Formation AngularJS - ENI Service</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css" />-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/css/materialize.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.99.0/js/materialize.min.js" defer></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js" defer ></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.min.js" defer ></script>
@@ -18,13 +23,21 @@
     <script src="app/controllers-q.js" defer ></script>
     <script src="app/services.js" defer ></script>
     <script src="app/filters.js" defer ></script>
+    <script src="app/directive.js" defer ></script>
     <!--<script src="directives/eni-range/eni-range.js" defer ></script>-->
     <script src="i18n/banque-resources_fr-fr.js" defer ></script>
 
 </head>
 <body class="container" ng-controller="demoCtrl">
-
-    <h1>{{"app_titre" | i18n}}</h1>
+        <nav>
+            <div class="nav-wrapper">
+            <a href="#" class="brand-logo">{{"app_titre" | i18n}}</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="#!/demo">Démo</a></li>
+                <li><a href="#!/clients">Clients</a></li>
+            </ul>
+            </div>
+        </nav>
 
     <main ng-view></main>
 

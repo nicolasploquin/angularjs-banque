@@ -4,59 +4,67 @@
 var app = angular.module("banque");
 app.constant("views", {
     "clients": `
-        <p>${3 + 2}</p>
-        <div>
-            <label>Rechercher <input type="search" ng-model="filtreNomPrenom" /></label>
-            <span>{{filtreNomPrenom}}</span>
-            <eni-range max="{{clients.length}}" valeurmax="limit" initial="4" test="testDirective()"></eni-range>
-            <input type="number" ng-model="limit" />
-        </div>
-        <ul class="list-group">
-            <a ng-href="#!/clients/{{client.id}}"
-               ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:limit"
-               class="list-group-item" >
-               {{client.prenom | capitalize}} {{client.nom | uppercase}}
-               <span class="badge" ng-if="client.comptes != 0">{{client.comptes.length || 0}}</span>
-            </a>
-        </ul>
-        <a ng-href="#!/clients/add" role="button" class="btn btn-primary" aria-label="Nouveau Client">
-		  <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{"clients_btn_ajouter" | i18n}}
-		</a>
+<form action="#" class="row">
+	<div class="col s6 m4">
+		<div class="input-field">
+			<input id="rech" type="text" ng-model="filtreNomPrenom" />
+			<label for="rech">Rechercher</label>
+		</div>
+	</div>
+	<div class="col s6 m4">
+		<eni-range max="{{clients.length}}" valeurmax="limit" initial="4" test="testDirective()"></eni-range>
+	</div>
+	<div class="col s6 m4">
+		<div class="input-field">
+			<input id="limite" type="number" ng-model="limit" />
+			<label for="limite">Nombre de ligne</label>
+		</div>
+	</div>
+</form>
+<div class="row">
+	<div class="col s12">
+		<div class="collection">
+				<a ng-href="#!/clients/{{client.id}}"
+						ng-repeat="client in clients | filter:clientFiltre | orderBy:'nom' | limitTo:limit"
+						class="collection-item" >
+						<span class="badge" ng-if="client.comptes != 0">{{client.comptes.length || 0}}</span>
+						{{client.prenom | capitalize}} {{client.nom | uppercase}}
+				</a>
+		</div>
+	</div>
+</div>
+<a class="waves-effect waves-light btn" ng-href="#!/clients/add"><i class="material-icons left">add</i>{{"clients_btn_ajouter" | i18n}}</a>
     `,
     "clientEdit":`
         <h2>Nouveau Client</h2>
-		<form name="form" ng-submit="enregistrer()">
-			<div class="form-group has-feedback" 
-				ng-class="{'has-success': form.cliNom.$valid, 'has-error': form.cliNom.$dirty && form.cliNom.$invalid}" >
-				<label class="sr-only" for="cliNom" >Nom *</label>
-				<input type="text" class="form-control" placeholder="Nom *" 
-						id="cliNom" name="cliNom" ng-model="client.nom" --ng-model-options="{getterSetter: true}"
-						required />
-				<span ng-show="form.cliNom.$valid" 
-				        class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
-				<span ng-show="form.cliNom.$dirty && form.cliNom.$invalid" 
-				        class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+		<form class="row" name="clientForm" ng-submit="enregistrer()" novalidate>
+			<div class="input-field col s12">
+				<input id="nom" name="nom" type="text" class="validate" required
+					ng-model="client.nom" ng-class="{invalid: clientForm.nom.$invalid && clientForm.nom.$dirty}">
+				<label for="nom" data-error="nom obligatoire" >Nom *</label>
 			</div>
-			<div class="form-group">
-				<label class="sr-only" for="cliPrenom" >Prénom</label>
-				<input type="text" class="form-control" placeholder="Prénom" 
-					    id="cliPrenom" name="cliPrenom" ng-model="client.prenom" />
+			<div class="input-field col s12">
+				<input id="prenom" name="prenom" type="text" class="validate"
+					ng-model="client.prenom" ng-class="{invalid: clientForm.prenom.$invalid && clientForm.nom.$dirty}"
+				>
+				<label for="prenom">Prénom</label>
 			</div>
-			
-			<input type="submit" class="btn btn-primary" value="{{'clientEdit_btn_enregistrer' | i18n}}" 
-			       ng-disabled="form.$invalid" />
-
+			<button type="submit" class="row waves-effect waves-light btn"
+				ng-disabled="clientForm.$invalid">
+				<i class="material-icons right">done</i>
+				Valider
+			</button>
 		</form>
     `,
     "client":`
 		<h2>{{client.prenom | capitalize}} {{client.nom  | uppercase}} 
-		    <a ng-href="/clients/add/{{client.id}}" class="btn btn-default"><span class="glyphicon glyphicon-edit"></span></a>
-		    <button type="button" class="btn btn-default" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span></button>
+		    <a ng-href="#!/clients/add/{{client.id}}" class="waves-effect waves-light btn"><i class="material-icons">edit</i></a>
+		    <button type="button" class="waves-effect waves-light btn" ng-click="remove()"><i class="material-icons">delete</i></button>
 		</h2>
-		<div class="list-group">
-			<a ng-href="#!/clients/{{client.id}}/{{compte.numero}}" class="list-group-item" 
+		<div class="collection">
+			<a ng-href="#!/clients/{{client.id}}/{{compte.numero}}" class="collection-item" 
 				ng-repeat="compte in client.comptes | orderBy:'-numero'" >
-			  {{compte.numero}} {{compte.intitule}} <span class="badge">{{compte.operations.length}}</span>
+			  {{compte.numero}} - {{compte.intitule}} <span class="badge">{{compte.operations.length}}</span>
 			</a>
 		</div>
     `,

@@ -8,17 +8,25 @@
 
 
     var app = angular.module("banque",["ngRoute","eniComposants"]);
+
+    app.constant("API_URL", "http://wildfly.westeurope.cloudapp.azure.com");
+//    app.constant("API_URL", "https://banque-api.azurewebsites.net/api");
+
     app.config(["$routeProvider","views", function($routeProvider, views){
 
         console.log("Configuration des routes...");
         $routeProvider
+            .when("/demo",{
+                controller: "clientsCtrl",
+                templateUrl: "app/demo.html"
+            })
             .when("/clients",{
                 controller: "clientsCtrl",
                 template: views.clients
             })
             .when("/clients/add/:id?",{
                 controller: "clientEditCtrl",
-                template: views.clientEdit
+                templateUrl: "app/client-form.html"
             })
             .when("/clients/:id",{
                 controller: "clientCtrl",
@@ -35,18 +43,6 @@
     }]);
     app.run(["$http",function($http){
         console.log("Application OK !");
-
-
-        $http({
-            method: "GET",
-            url: "http://wildfly.westeurope.cloudapp.azure.com/clients"
-        }).then(function(reponse){
-            console.dir(reponse.data);
-        });
-
-
-
-
 
         setTimeout(function(){
             document.querySelector("#splash").remove();

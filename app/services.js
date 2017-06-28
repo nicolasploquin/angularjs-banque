@@ -10,6 +10,7 @@
     app.factory("dataLocalService",function(){
 
         var _data = angular.fromJson(localStorage.banque_ng);
+//        var _data = JSON.parse(localStorage.banque_ng);
 
         // private function
         function save(){
@@ -26,22 +27,20 @@
                 return attente.promise;
             },
             client : function(id){
-                return _data.clients.find(cli => cli.id == id) || {}; // ES6
+                return _data.clients.find(cli => cli.id == id) || {}; // ES2015
 
+                // _data.clients.forEach( cli => console.log(cli.nom) );            
 
                 // for(let client of _data.clients){
                 //     if(client.id == id) return client;
                 // }
-                // for(var i in _data.clients){
+                // for(var i in _data.clients){ // IE11-
                 //     if(_data.clients[i].id == id) return _data.clients[i];
                 // }
 
-                // return _data.clients.filter(cli => cli.id == id) || {}; // ES6
+                // return _data.clients.filter(cli => cli.id == id) || {}; // ES2015
                 // return _data.clients.filter(function(cli){ return cli.id == id; }) || {}; // ES5
-                //
-                // for(var i in _data.clients){
-                //     if(_data.clients[i].id == id) return _data.clients[i];
-                // }
+
                 //
                 // console.warn('Client inconnu : ' + id);
                 // return {};
@@ -88,11 +87,21 @@
 
 
     });
+/*
+    $http({
+        url:API_URL+"/clients/0",
+        method:"post",
+        params: {
+            nom: "...",
+            prenom: "..."
+        }
+    });
+*/
 
 
-    app.factory("dataHttpService",["$http","$q",function($http,$q) {
+    app.factory("dataHttpService",["$http","$q", "API_URL",function($http,$q, API_URL) {
 
-        const API_URL = "http://wildfly.westeurope.cloudapp.azure.com";
+        // const API_URL = "http://wildfly.westeurope.cloudapp.azure.com";
 
         var _data = {clients:[]};
 
@@ -101,22 +110,16 @@
                 // Objet de mise en attente de la réponse du serveur
                 var attente = $q.defer();
 
-
                 $http({
                     url:API_URL+"/clients",
                     method:"get"
                 }).then(function(res){
                     _data.clients = res.data;
-//                    console.dir(data);
-                    console.log("réponse serveur")
-
                     attente.resolve(res.data);
-
-                },function(){
+                },function(err){
                     console.warn("Erreur lors de la récupération des données sur le serveur.");
+                    attente.reject(err);
                 });
-
-                console.log("réponse service");
 
                 // retourne l'objet d'attente pour enregistrement des fonctions suivantes
                 return attente.promise;
@@ -131,7 +134,7 @@
                 $http({
                     url:API_URL+"/clients/"+(angular.isDefined(client.id)?client.id:"0"),
                     method:(angular.isDefined(client.id)?"put":"post"),
-                    params:angular.copy(client)
+                    params:client
                 }).then(function(){
                     defer.resolve();
                 });
@@ -171,9 +174,6 @@
         };
 
     }]);
-
-
-
 
 
 
